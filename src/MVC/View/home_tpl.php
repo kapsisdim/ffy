@@ -17,7 +17,6 @@
                 <form method="post" action="/logout">
                     <input type="submit" value="Log out" name="logout" class="btn" style="width:70px; border-radius: 5px; padding: 10px;">                    
                 </form>
-
                 <?php if (!empty($products)): ?>
                     <table style="float: left;">
                         <tr>
@@ -33,11 +32,10 @@
                         </tr>
                     </table>                    
                 <?php endif ?>
-
                 <td><br><a href = "/products" class = "btnsignin" style = "text-decoration: none; width:70px; border-radius: 5px; padding: 10px;"> Order </a></td>
-
             <?php else: ?>
-            <a href="/signin" class="btnsignin" style="text-decoration: none; margin-right:10%;"> Sign in </a>
+                <a href="/signin" class="btnsignin" style="text-decoration: none; margin-right:10%;"> Sign in </a><br>
+                <br><a href ="/register" class="btnsignin" style="text-decoration: none; margin-right:10%; margin-top"> Sign up </a>
             <?php endif ?>
         </div>
         <div class="menu" style="text-align: center;">

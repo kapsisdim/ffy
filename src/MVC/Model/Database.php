@@ -12,7 +12,7 @@ class Database
     {
         $dsn = 'mysql:dbname=ffy_dev;host=localhost';
         $user = 'admin1';
-        $password = '1234';    
+        $password = '1234';
         
         $this->dbh = new PDO($dsn, $user, $password); 
     }

@@ -23,8 +23,14 @@ class ProductController extends AbstractController
 
     public function viewAction()
     {
-        $menu = (new ProductRepository())->getMenu();
+        $burgers = (new ProductRepository())->getProducts('Burgers');
 
-        return $this->render('/../View/create_order_tpl.php', ['menu' => $menu]);
+        $pizza = (new ProductRepository())->getProducts('Pizzas');
+
+        $pasta = (new ProductRepository())->getProducts('Pasta');
+
+        $drinks = (new ProductRepository())->getProducts('Drinks');
+
+        return $this->render('/../View/create_order_tpl.php', ['burgers' => $burgers, 'pizzas' => $pizza, 'pastas' => $pasta, 'drinks' => $drinks]);
     }
 }

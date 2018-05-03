@@ -1,4 +1,29 @@
 h1{
+    text-align: center;
+}
+
+.images{
+    width: 400px;
+    height: 275px;
+}
+
+#title{
+    color:black; 
+    text-decoration: none;
+}
+
+h2{
+    text-align: center;
+    color:#31708f;     
+}
+
+h4{
+    text-align:center;
+}
+
+
+
+/* h1{
     font-family: Lobster, Monospace;
     text-align: center;
 }
@@ -121,4 +146,4 @@ h2{
     float: right;
     margin-right: 80px;
 }
-
+ */

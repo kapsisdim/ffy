@@ -2,13 +2,52 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"> 
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/style.css">        
         <title></title>
     </head>
     
     <body>
-        <div class="header">
+
+        <div class="page-header" style="background-color:#DEB887; margin-top: 0; padding-top: 10px">
+            <h1><a href="/" id="title">Food For You</a></h1>
+        </div>   
+
+        <div class ="container">
+
+            <div class="row">
+
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="panel-heading">
+                        <h2>Menu</h2>
+                    </div>
+                </div>
+            
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4 col-md-offset-4">
+                    
+                    <div class="panel-heading" style="color:#D2691E; background-color:#DEB887;">
+                        <h4><?= $products[0]->getType();?></h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <?php foreach($products as $product): ?>
+                            <?= $product->getName().'...................................................'.$product->getPrice().'€';?><br>
+                        <?php endforeach ?>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+       <!--  <div class="header">
             <h1><a href="/" style="color:black;text-decoration: none;">Food For You </a></h1>            
         </div>
 
@@ -37,7 +76,9 @@
                 </tr>
                 <?php endforeach ?>
             </table>
-        </div>
+        </div> -->
+
+    <script src="/js/bootsrap.min.js"></script>    
     </body>
     
 </html>

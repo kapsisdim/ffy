@@ -6,9 +6,18 @@ namespace MVC\Controller;
 
 use MVC\Model\Validator;
 use MVC\Model\MemberRepository;
+use MVC\Model\OrderRepository;
 
 class RegistrationController extends AbstractController
 {
+    private $username;
+
+    private $email;
+
+    private $password_1;
+
+    private $password_2;
+
     public function viewAction()
     {
         return $this->render('/../View/signup_tpl.php');
@@ -16,23 +25,23 @@ class RegistrationController extends AbstractController
 
     public function registerAction()
     {
-        $username = $this->getPost('username');
+        $this->username = $this->getPost('username');
 
-        $email = $this->getPost('email');
+        $this->email = $this->getPost('email');
 
-        $password_1 = md5($this->getPost('password_1'));
+        $this->password_1 = md5($this->getPost('password_1'));
         
-        $password_2 = md5($this->getPost('password_2'));
+        $this->password_2 = md5($this->getPost('password_2'));
 
-        $validation = (new Validator())->registerValidation($username, $email, $password_1, $password_2);
+        $validation = (new Validator())->registerValidation($this->username, $this->email, $this->password_1, $this->password_2);
 
         if($validation) {
 
-            $member = (new MemberRepository())->createMember($username, $email, $password_1);
+            $member = (new MemberRepository())->createMember($this->username, $this->email, $this->password_1);
 
-            $loggedin = isset($username);
-                        
-            return $this->render('/../View/home_tpl.php', ['username' => $username, 'loggedin' => $loggedin]);
+            $_SESSION['username'] = $this->username;
+
+            header ("Location: /");
             
         } else {
             return $this->render('/../View/signup_tpl.php' );

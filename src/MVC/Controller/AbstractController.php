@@ -17,7 +17,7 @@ class AbstractController
     protected function getPost(string $params, $default = null)
     {
     
-        return array_key_exists($params, $_POST) ? $_POST[$params] : $default; //checks if $param exists in $_POST, if(true)->return $_POST[$param], else return $default
+        return array_key_exists($params, $_POST) ? $_POST[$params] : $default; //checks if $params exists in $_POST, if(true)->return $_POST[$params], else return $default
              
     }
 

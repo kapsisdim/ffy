@@ -27,6 +27,15 @@ class Validator
         $this->validation = new Validation();
     }
 
+    public function changePasswordValidation($password_1, $password_2)
+    {
+        if($this->validation->passwordValidation($password_1, $password_2)) {
+            $this->validator = true;
+        }
+
+        return $this->validator;
+    }
+
     public function registerValidation($username, $email, $password_1, $password_2)
     {        
         if(empty($this->validation->usernameValidation($username))) {

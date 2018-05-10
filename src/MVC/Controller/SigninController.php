@@ -5,9 +5,18 @@ declare (strict_types = 1);
 namespace MVC\Controller;
 
 use MVC\Model\Autheticator;
+use MVC\Model\OrderRepository;
 
 class SigninController extends AbstractController
 {
+    private $username;
+
+    private $password;
+
+    private $order;
+
+    private $action;
+
     public function viewAction()
     {
         return $this->render('/../View/signin_tpl.php');
@@ -15,20 +24,24 @@ class SigninController extends AbstractController
 
     public function indexAction()
     {
-        $username = $this->getPost('username');
-        $password = md5($this->getPost('password'));
+        $this->username = $this->getPost('username');
+        $this->password = md5($this->getPost('password'));
 
-        $authetication = (new Autheticator())->userAutheticator($username, $password);
+        $authetication = (new Autheticator())->userAutheticator($this->username, $this->password);
 
         if ($authetication) {
-            $_SESSION['username'] = $username; 
-            $loggedin = true;
-
-            return $this->render('/../View/home_tpl.php',['loggedin' => $loggedin, 'username' => $username]);
+            $_SESSION['username'] = $this->username;
             
+            header ("Location: /");
+
         } else {
 
             return $this->render('/../View/signin_tpl.php');
         }
+    }
+
+    public function __construct()
+    {
+        $this->action = new OrderRepository();
     }
 }

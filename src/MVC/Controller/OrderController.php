@@ -17,11 +17,34 @@ class OrderController extends AbstractController
 
     private $basket;
 
+    private $quantity;
+
     public function viewAction()
     {
         $this->isAuthenticated();
 
-        return $this->render('/../View/print_order_tpl.php');
+        $this->order = $this->action->getOrder($this->getSession('username'));
+
+        $this->basket = $this->action->getOrderItems($this->getSession('username'), $this->order['order_id']);
+
+        return $this->render('/../View/print_order_tpl.php', ['products' => $this->basket, 'sum' => $this->order['summa'], 'username' => $this->getSession('username')]);
+    }
+
+    public function showAllOrderAction()
+    {
+        $this->isAuthenticated();
+
+        $username = $this->getSession('username');
+
+        $loggedin = isset($username);
+
+        $orders = $this->action->getAllOrders($this->getSession('username'));
+
+        $order = $this->action->getOrder($this->getSession('username'));
+
+        $basket = $this->action->getOrderItems($this->getSession('username'), $order['order_id']);
+
+        return $this->render('/../View/your_orders_tpl.php', ['loggedin' => $loggedin, 'orders' => $orders, 'products' => $this->basket, 'sum' => $this->order['summa'], 'username' => $this->getSession('username')]);
     }
 
     public function indexAction()
@@ -30,31 +53,39 @@ class OrderController extends AbstractController
         
         $this->checklist = $this->getPost('checklist');
 
+        $this->quantity = $this->getPost('quantity');
+
+        if (!empty($this->checklist)) {
+            $keys = array_combine($this->checklist, $this->checklist);
+
+            $this->quantity = array_intersect_key($this->quantity, $keys);
+        }
         //check if there is a pending order for this user
         //if there isn't create a new order
         if ($this->action->getOrder($this->getSession('username')) == false && !empty($this->checklist)) {
 
-            $this->action->createOrder($this->getSession('username'), $this->checklist);
+            $this->action->createOrder($this->getSession('username'), $this->checklist, $this->quantity);
         
         //if there isnt and there are no products checked, reload page
         } else if ($this->action->getOrder($this->getSession('username')) == false){
 
-            $menu = $this->action->getMenu();
+            
+            $this->action = new ProductController();
 
-            return $this->render('/../View/create_order_tpl.php', ['menu' => $menu]);
+            return $this->action->viewAction();
         
         //if there is already a pending order for this user, update it
         } else {
 
-            $this->action->updateOrder($this->action->getOrder($this->getSession('username'))[0]['order_id'], $this->checklist);
+            $this->action->updateOrder($this->action->getOrder($this->getSession('username')) ['order_id'], $this->checklist, $this->quantity);
         }
 
         //create product
         $this->order = $this->action->getOrder($this->getSession('username'));
 
-        $basket = $this->action->getOrderItems($this->getSession('username'), $this->order[0]['order_id']);
+        $this->basket = $this->action->getOrderItems($this->getSession('username'), $this->order['order_id']);
 
-        return $this->render('/../View/print_order_tpl.php', ['products' => $basket, 'sum' => $this->order[0]['summa'] ]);
+        header ("Location: /yourorder");
     } 
 
     public function cancelAction()
@@ -62,8 +93,6 @@ class OrderController extends AbstractController
         $this->isAuthenticated();
 
         $username = $this->getSession('username');
-
-        $loggedin = isset($username);
 
         $this->id = $this->action->getOrder($this->getSession('username'));
 
@@ -76,22 +105,16 @@ class OrderController extends AbstractController
 
         $username = $this->getSession('username');
 
-        $loggedin = isset($username);
+        $this->order = $this->action->getOrder($username);
 
-        $this->id = $this->action->getOrder($username);        
+        $confirmOrder = $this->action->confirmOrder($this->order['order_id']);
 
-        $sum = $this->action->getOrder($this->getSession('username'));
-
-        $confirmOrder = $this->action->confirmOrder($this->id[0]['order_id']);
-
-        return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'sum' => $sum[0]['order_id'], 'products' => $this->basket]);
+        return $home = (new \MVC\Controller\HomeController())->indexAction();
     }
 
     public function __construct()
     {
         $this->action = new OrderRepository();
-        $this->order[0][0] = [];
-        $this->id[0][0] = [];
         $this->checklist = null;
         $this->basket = null;
     }

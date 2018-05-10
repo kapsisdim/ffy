@@ -18,7 +18,7 @@ class Productrepository
         $sth = $this->connection->prepare('SELECT product_id AS id, product AS name, price, type FROM menu WHERE type = ?');
         $sth->execute([$type]);
         $products = $sth->fetchAll();
-/*         print_r($products);die; */
+        
         return array_map(function($product)
         {
             return new ProductModel($product['id'], $product['name'], $product['price'], $product['type']);

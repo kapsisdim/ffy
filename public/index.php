@@ -38,25 +38,40 @@ try {
             $controller = new MVC\Controller\ProductController();
             echo $controller->viewAction();
             break;
-        case $path == '/logout' && $method == 'POST':        
+        case $path == '/logout' && $method == 'GET':        
             $controller = new MVC\Controller\LogoutController();            
             echo $controller->indexAction();
             break;
-        case $path == '/yourorder' && $method == 'POST':
+        case $path == '/yourorder':
+            $controller = new MVC\Controller\OrderController();
+            echo $controller->viewAction();
+            break;
+        case $path == '/addproduct' && $method == 'POST':
             $controller = new MVC\Controller\OrderController();
             echo $controller->indexAction();
             break;
-/*         case $path == '/products/your_order' && $method == 'GET':
-            $controller = new MVC\Controller\OrderController();
-            echo $controller->viewAction();
-            break; */
-        case $path == '/confirm' && $method == 'POST':
+        case $path == '/confirm':
             $controller = new MVC\Controller\OrderController();
             echo $controller->confirmAction();
             break;
         case $path == '/cancel' && $method == 'POST':
             $controller = new MVC\Controller\OrderController();
             echo $controller->cancelAction();
+            break;
+        case $path == '/checkout' && $method == 'POST':
+            $controller = new MVC\Controller\CheckoutController();
+            echo $controller->indexAction();
+            break;
+        case $path == '/settings' && $method == 'GET':
+            $controller = new MVC\Controller\MemberController();
+            echo $controller->indexAction();
+        case $path == '/update_account' && $method == 'POST':
+            $controller = new MVC\Controller\MemberController();
+            echo $controller->updateAction();
+            break;
+        case $path == '/orders' && $method == 'GET':
+            $controller = new MVC\Controller\OrderController();
+            echo $controller->showAllOrderAction();
             break;
         default:
             throw new PageNotFoundException('Page not found, 404');

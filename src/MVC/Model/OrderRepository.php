@@ -14,63 +14,92 @@ class OrderRepository
     private $sum;
     private $orderId;
 
-    public function getOrder($username)
+    public function getAllOrders($username)
     {
-        $sth = $this->connection->prepare('SELECT username, summa, order_id FROM orders WHERE status = "pending" AND username = ?');
+        $sth = $this->connection->prepare('SELECT username, summa, order_id, order_date, order_time, status FROM orders WHERE username = ?');
         $sth->execute([$username]);
         $result = $sth->fetchAll();
+        return $result;
+    }
+
+    public function getOrder($username)
+    {
+        $sth = $this->connection->prepare('SELECT username, summa, order_id, status FROM orders WHERE status = "pending" AND username = ?');
+        $sth->execute([$username]);
+        $result = $sth->fetch();
 
         return $result;
     }
 
-    public function createOrder($username, $checklist)
-    {        
+    public function createOrder($username, $checklist, $quantity)
+    {
+        date_default_timezone_set('Europe/Athens');
+        $date = date("Y-m-d");
+        $time = date("H:i:s");
+        $sth = $this->connection->prepare('INSERT INTO orders(username, status, order_date, order_time) VALUES (?, ?, ?, ?)');
+        $sth->execute([$username, "pending", $date, $time]);
+        $this->ordeId = $this->connection->lastInsertId(); 
+
+        $this->order = new OrderModel($username, $this->ordeId, "pending");
+
         if (!empty($checklist)) {
-
-            $sth = $this->connection->prepare('INSERT INTO orders(username, status) VALUES (?, ?)');
-            $sth->execute([$username, "pending"]);
-            $this->ordeId = $this->connection->lastInsertId();
-
-            $this->order = new OrderModel($username, $this->ordeId, "pending");
 
             foreach ($checklist as $check) {
 
                 $sth = $this->connection->prepare('SELECT price, product_id FROM menu WHERE product = ?');
                 $sth->execute([$check]);
-                $result = $sth->fetch(PDO::FETCH_ASSOC); 
+                $result = $sth->fetch(PDO::FETCH_ASSOC);
+                
+                $q = (int)$quantity[$check];
 
-                $sth = $this->connection->prepare('INSERT INTO ordered_products(order_id, product, price, product_id) VALUES(?, ?, ?, ?)');
-                $sth->execute([$this->ordeId, $check, $result['price'], $result['product_id']]); 
+                $sth = $this->connection->prepare('INSERT INTO ordered_products(order_id, product, price, product_id, quantity) VALUES(?, ?, ?, ?, ?)');
+                $sth->execute([$this->ordeId, $check, $result['price'], $result['product_id'], $q]); 
                 
                 $this->order->setProducts($check);
-                $this->sum += $result['price'];
+                $this->sum = $this->sum + ($result['price'] * $q);
 
                 $sth = $this->connection->prepare('UPDATE orders SET summa = ? WHERE order_id = ?');
                 $sth->execute([$this->sum, $this->ordeId]);
             }
+            
             $this->order->setSum($this->sum);
+        } else {
+            header ("Location: /products");
         }
     }
 
-    public function updateOrder($id, $checklist)
+    public function updateOrder($id, $checklist, $quantity)
     {
-        $sth = $this->connection->prepare('SELECT price, product_id FROM menu WHERE product = ?');
-
         foreach ($checklist as $check) {
-                       
+
+            $sth = $this->connection->prepare('SELECT price, product_id FROM menu WHERE product = ?');
             $sth->execute([$check]);
             $result = $sth->fetch(PDO::FETCH_ASSOC);
             
-            $sth = $this->connection->prepare('INSERT INTO ordered_products(order_id, product, price, product_id) VALUES(?, ?, ?, ?)');
-            $sth->execute([$id, $check, $result['price'], $result['product_id']]);
+            $sth = $this->connection->prepare('SELECT product FROM ordered_products WHERE order_id = ? AND product = ?');
+            $sth->execute([$id, $check]);
+            $r = $sth->fetch(PDO::FETCH_ASSOC);
+            
+            $q = (int)$quantity[$check];
+
+            if ($r == false) {
+
+                $sth = $this->connection->prepare('INSERT INTO ordered_products(order_id, product, price, product_id, quantity) VALUES(?, ?, ?, ?, ?)');
+                $sth->execute([$id, $check, $result['price'], $result['product_id'], $q]);
+
+            } else {
+                $sth = $this->connection->prepare('UPDATE ordered_products SET quantity = ? WHERE order_id = ? AND product = ?');
+                $sth->execute([$q, $id, $check]);
+            }
+
         }
 
-        $sth = $this->connection->prepare('SELECT price FROM ordered_products WHERE order_id = ?');
+        $sth = $this->connection->prepare('SELECT price, quantity FROM ordered_products WHERE order_id = ?');
         $sth->execute([$id]);
         $result = $sth->fetchAll();
 
         foreach ($result as $r) {
-            $this->sum += $r['price'];
+            $this->sum = $this->sum + ($r['price'] * $r['quantity']);
         }
 
         $sth = $this->connection->prepare('UPDATE orders SET summa = ? WHERE order_id = ?');
@@ -94,7 +123,7 @@ class OrderRepository
     public function getOrderItems($username, $id)
     {
         $order = $this->getOrder($username);
-        $sth = $this->connection->prepare('SELECT product, price FROM ordered_products WHERE order_id = ?');
+        $sth = $this->connection->prepare('SELECT product, price, quantity FROM ordered_products WHERE order_id = ?');
         $sth->execute([$id]);
         $result = $sth->fetchAll();
 

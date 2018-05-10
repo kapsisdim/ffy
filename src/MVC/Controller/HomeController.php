@@ -26,12 +26,12 @@ class HomeController extends AbstractController
 
         if (!empty($this->order)) {
 
-            $this->basket = $this->action->getOrderItems($this->getSession('username'), $this->order[0]['order_id']);
+            $this->basket = $this->action->getOrderItems($this->getSession('username'), $this->order['order_id']);
 
-            return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'products' => $this->basket, 'sum' => $this->order[0]['summa']]);
+            return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'products' => $this->basket, 'sum' => $this->order['summa'] ]);
         }
 
-        return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'products' => $this->basket, 'sum' => $this->order]);        
+        return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username]);        
     }
 
     public function __construct()

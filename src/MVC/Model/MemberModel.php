@@ -14,6 +14,8 @@ class MemberModel
 
     private $password;
 
+    
+
     public function __construct($id, $username, $email, $password)
     {
         $this->id = $id;

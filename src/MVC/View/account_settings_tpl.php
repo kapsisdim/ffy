@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-
-<html>    
+<html>
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"> 
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
         <title></title>
     </head>
-    
-    <body>
-        <div class ="row">
 
-            <div class="page-header col-md-12  page-header-style">
+    <body>
+
+        <div class ="row">
+            <div class="page-header col-md-12 page-header-style">
                 <div class="col-md-12">
                     <h1><a href="/" id="title" >Food For You</a></h1>
                 </div>
@@ -37,9 +36,9 @@
                     
                                     <ul class="dropdown-menu">
                                         <li><a href="/products/Burgers">Burgers</a></li>
-                                        <li><a href="/products/Pizzas">Pizza</a></li>
+                                        <li><a href="/products/Pizzas">Pizzas</a></li>
                                         <li><a href="/products/Pasta">Pasta</a></li>
-                                        <li><a href="/products/Drinkss">Drinks</a></li>
+                                        <li><a href="/products/Drinks">Drinks</a></li>
                                     </ul>
                                 </li>
 
@@ -50,7 +49,7 @@
                         <div class="col-md-4">
                             <ul class="nav navbar-nav navbar-right" style="margin-top:5px;">
                                 <li class="dropdown">
-                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 0px;padding-bottom: 0px;"><h5 style="color:#9d9d9d;">
+                                    <a href="" class="dropdown-toggle padding-top-zero padding-bottom-zero" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="color:#9d9d9d;">
                                     <span class="glyphicon glyphicon-user"> Welcome <strong><?= $username; ?></strong></span><span class="caret pull-right"></span></h5>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -69,83 +68,95 @@
 
         </div>
 
-        <div class="row">
-            <div class="container col-md-12 order-container">
+        <div class="row order-container">
+            <div class="container col-md-12">
 
-                <div class ="row">
-
-                    <div class="col-md-4 col-md-offset-4">
-                        <div class="panel-heading">
-                            <h2>Your Order</h2>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="col-md-4 col-md-offset-3">
+                            <div class="panel-heading">
+                                <h2>Account Settings</h2>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-                
+
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            <div class="col-md-6 col-md-offset-3">
 
-                    <div class="col-md-4 col-md-offset-4">
-                        
-                        <form method="post" action="/checkout">
-                            <div class="row">
-                                <div class="panel-heading panel-heading-color">
-                                    <h3>Basket</h3>
-                                </div>
-
-                                <div class="panel-body padding-zero">
-                                    <ul class="list-group">
-                                        <?php foreach($products as $product): ?>
-
-                                            <li class="list-group-item">                                            
-                                            <?= $product['product'].' '.'(x'.$product['quantity'].')';?>
-                                                <span class="badge"><?= $product['price'].'€';?></span>
-                                            </li>
-
-                                        <?php endforeach ?>
-                                    </ul>
-                                    <br><p><strong>total: <?= $sum.'€'; ?></strong></p>
-
-                                    <div style="border-top:1px solid#888; padding-top:15px">
-                                        
-                                        <div class="col-md-6 padding-left-zero">
-                                            <br><label style="text-decoration:underline;">Payment Method</label>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="payment_method" type="radio" class="with-gap" id="radio109" value="Cash" checked> Cash
+                                <form method="post" action="/update_account">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel-heading panel-heading-color">
+                                                <span class="glyphicon glyphicon-cog"></span> Settings
+                                            </div>
+                                            <div class="panel-body panel-body-style">                                        
+                                                <div class="row">
+                                                    <h4 style ="float: left; padding-left:15px;"><strong>Change Password</strong></h4>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">    
+                                                        <div class="col-md-6 col-xs-12">                                                                                                   
+                                                            <label for="password"><strong><span class="text-danger"> * </span>New Password:</strong></label>
+                                                            <input type="password" name="password_1" placeholder="Enter your new password" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-xs-12">                                                                                                   
+                                                            <label for="password"><strong><span class="text-danger"> * </span>Confirm Password:</strong></label>
+                                                            <input type="password" name="password_2" placeholder="Confirm your new password" required/>
+                                                        </div>              
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12"><br><small><strong>inputs with (<span class="text-danger"> * </span>) are required!</strong></small></div>
+                                                    </div>           
+                                                </div>  
                                             </div>
 
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="payment_method" type="radio" class="with-gap" id="radio109" value="Credit Card"> Credit Card
-                                            </div>
                                         </div>
 
-                                        <div class="col-md-6 padding-right-zero" style="padding-left: 120px;">
-                                            <br><label style="text-decoration:underline;">Delivery Method</label>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="delivery_method" type="radio" class="with-gap" id="radio109" value="Delivery" checked> Delivery
-                                            </div>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="delivery_method" type="radio" class="with-gap" id="radio109" value="From Store"> From Store
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <a href="/" class="btn btn-danger pull-left">Cancel</a>
+                                                <button type="submit" class="btn btn-success pull-right">Submit</button>
                                             </div>
                                         </div>
+                                    </div>                           
+
+                                </form>
+                            </div>                        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-6 col-md-offset-2">
+                                <div class="row">
+                                    <div class="panel-heading panel-heading-color">
+                                    <h4><span class="fa fa-shopping-basket"></span>  Basket</h4>
+                                    </div>
+
+                                    <div class="panel-body padding-zero">
+                                        <ul class="list-group">
+                                            <?php if (!empty($products)): ?>
+                                                <?php foreach($products as $product): ?>   
+                                                    <li class="list-group-item">                      
+                                                    <?= $product['product'].' '.'(x'.$product['quantity'].')';?><span class="badge"><?=$product['price'].'€';?></span>
+                                                    </li>
+                                                <?php endforeach ?>
+                                                <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
+                                            <?php else: ?>
+                                                <li class="list-group-item" style="border-radius:0px;">(Basket empty)</li>
+                                            <?php endif ?>
+                                        </ul> 
                                     </div>
 
                                 </div>
-
                             </div>
-
-                            <div class="row" style="padding-top:50px">
-
-                                <div class="col-md-2" style="padding-left:0px">
-                                    <a href="/" class="btn btn-danger">Cancel</a>
-                                </div>
-                                <div class="col-md-3 col-md-offset-7">                                
-                                    <input type="submit" value="Checkout" name="submit" class="btn btn-success">
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,12 +277,12 @@
 
             </footer>
 
-        </div>
+        </div> 
 
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-    </body>   
+
+        <script src="/js/bootstrap.min.js"></script> 
+
+    </body>
 
 </html>
-
-

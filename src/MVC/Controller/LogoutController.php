@@ -10,6 +10,6 @@ class LogoutController extends AbstractController
     {
         session_unset();
               
-        return $this->render('/../View/signin_tpl.php');
+        header ("Location: /signin");
     }
 }

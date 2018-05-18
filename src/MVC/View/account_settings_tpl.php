@@ -143,15 +143,28 @@
                                         <ul class="list-group">
                                             <?php if (!empty($products)): ?>
                                                 <?php foreach($products as $product): ?>   
-                                                    <li class="list-group-item">                      
-                                                    <?= $product['product'].' '.'(x'.$product['quantity'].')';?><span class="badge"><?=$product['price'].'€';?></span>
+                                                    <li id="par_<?=$product['product'] ?>" class="list-group-item li-padding">                      
+                                                        <?= $product['product'].' '.'(x'.$product['quantity'].')';?><button id="<?=$product['product'] ?>" class="btn btn-danger pull-right remove-product" onclick="deleteItem(this)"><span class=" glyphicon glyphicon-remove"></span></button><span class="badge"><?=$product['price'].'€';?></span>
                                                     </li>
                                                 <?php endforeach ?>
-                                                <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
+                                                <br><p class="total-border sum"><strong>total: <?= $sum.'€'; ?></strong></p>
                                             <?php else: ?>
                                                 <li class="list-group-item" style="border-radius:0px;">(Basket empty)</li>
                                             <?php endif ?>
                                         </ul> 
+                                    </div>
+
+                                    <div class="row">
+                            
+                                    <form method="post" action="/cancel">
+                                        <?php if (!empty($products)): ?>
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                            <a href="/products" class="btn btn-primary pull-right" style="background-color:#3d6c8a">Order</a>
+                                        <?php else: ?>
+                                            <a href="/products" class="btn btn-primary pull-right" style="background-color:#3d6c8a">Order</a>
+                                        <?php endif ?>
+                                    </form>
+
                                     </div>
 
                                 </div>
@@ -282,6 +295,8 @@
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
         <script src="/js/bootstrap.min.js"></script> 
+
+        <script src="https://button.torawallet.gr/tora/checkout.js"></script>
 
     </body>
 

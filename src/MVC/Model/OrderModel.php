@@ -12,15 +12,16 @@ class OrderModel
 
     private $status;
 
-    private $summ;
+    private $sum;
 
     private $products;
 
-    public function __construct($username, $id, $status)
+    public function __construct($username, $id, $status, $sum)
     {
         $this->$username = $username;
         $this->id = $id;
         $this->status = $status;
+        $this->sum = $sum;
         $this->products = [];
     }
 

@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title></title>
+
     </head>
 
     <body>
@@ -70,223 +71,179 @@
 
         </div>
 
-        <div class="row order-container">
-            <div class="col-md-12">
-                <div class="col-md-8" >
-                    <form method="post" action="/confirm">
-                        <div class="row">
-                            <?php if( strcmp($deliveryMethod, 'Delivery') == 0 ): ?>
-                                <!--SHIPPING METHOD-->
-                                <div class="col-md-6">
-                                    <div class="panel-heading panel-heading-color"><span class="glyphicon glyphicon-home"></span> Address</div>
-                                    <div class="panel-body panel-body-style">
+        <div class="container menu-container">
+  
+                <div class="stepwizard col-md-offset-3">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step">
+                            <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+                            <p>Shipping</p>
+                        </div>
+                        <div class="stepwizard-step">
+                            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                            <p>Payment</p>
+                        </div>
+                    </div>
+                </div>
+                    
+                <form role="form" action="/confirm" method="post">
+
+                    <div class="row setup-content" id="step-1">
+                        <div class="col-xs-6 col-md-offset-3">
+                            <div class="col-md-12">
+                                <div class="panel-heading panel-heading-color">
+                                    <h3>Shipping</h3>
+                                </div>
+
+                                <div class="panel-body panel-body-style">
+                                    <div class="form-group">
+                                        <br><label style="text-decoration:underline;">Delivery Method</label>
+
+                                        <div class="form-check radio-pink-gap ">
+                                            <input name="delivery_method" type="radio" class="with-gap" value="Delivery" onclick="toggle('delivery')" checked> Delivery
+                                        </div>
+
+                                        <div class="form-check radio-pink-gap ">
+                                            <input name="delivery_method" type="radio" class="with-gap" value="From Store" onclick="toggle('store')"> From Store
+                                        </div>
+                                    </div>
+
+                                    <div id="address-info">
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6 col-xs-12">
-                                                <label for="first_name"><strong><span class="text-danger"> * </span>First Name:</strong></label>
-                                                <input type="text" name="first_name" class="form-control" placeholder="Enter your first name" value="" required/>
+                                            <div class="row">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <label for="first_name"><strong><span class="text-danger"> * </span>First Name:</strong></label>
+                                                    <input id="first-name" type="text" name="first_name" class="form-control" placeholder="Enter your first name"/>
+                                                </div>
+                                                <div class="span1"></div>
+                                                <div class="col-md-6 col-xs-12">
+                                                    <label for="sir_name"><strong><span class="text-danger"> * </span>Sir Name:</strong></label>
+                                                    <input id="sir-name" type="text" name="sir_name" placeholder="Enter your sir name" class="form-control" required/>
+                                                </div>
+                                            </div>    
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="address"><strong><span class="text-danger"> * </span>Address:</strong></label></div>
+                                                <div class="col-md-12">
+                                                    <input id="address" type="text" name="address" placeholder="Enter your Address" class="form-control" required/>
+                                                </div>
                                             </div>
-                                            <div class="span1"></div>
-                                            <div class="col-md-6 col-xs-12">
-                                                <label for="sir_name"><strong><span class="text-danger"> * </span>Sir Name:</strong></label>
-                                                <input type="text" name="sir_name" placeholder="Enter your sir name" class="form-control" value="" required/>
-                                            </div>
-                                        </div>    
                                         </div>
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="address"><strong><span class="text-danger"> * </span>Address:</strong></label></div>
-                                            <div class="col-md-12">
-                                                <input type="text" name="address" placeholder="Enter your Address" class="form-control" value="" required/>
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="city"><strong><span class="text-danger"> * </span>City:</strong></div>
+                                                <div class="col-md-12">
+                                                    <input id="city" type="text" name="city" placeholder="Enter your city" class="form-control" required/>
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="city"><strong><span class="text-danger"> * </span>City:</strong></div>
-                                            <div class="col-md-12">
-                                                <input type="text" name="city" placeholder="Enter your city" class="form-control" value="" required/>
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="state"><strong><span class="text-danger"> * </span>State:</strong></label></div>
+                                                <div class="col-md-12">
+                                                    <input id="state" type="text" name="state" placeholder="Enter your state" class="form-control" value="" required/>
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="state"><strong><span class="text-danger"> * </span>State:</strong></label></div>
-                                            <div class="col-md-12">
-                                                <input type="text" name="state" placeholder="Enter your state" class="form-control" value="" required/>
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="zip_code"><strong><span class="text-danger"> * </span>Zip / Postal Code:</strong></label></div>
+                                                <div class="col-md-12">
+                                                    <input id="zip" type="text" name="zip_code" placeholder="Enter your zip / postal code" class="form-control" value="" required/>
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="zip_code"><strong><span class="text-danger"> * </span>Zip / Postal Code:</strong></label></div>
-                                            <div class="col-md-12">
-                                                <input type="text" name="zip_code" placeholder="Enter your zip / postal code" class="form-control" value="" required/>
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="phone_number"><strong><span class="text-danger"> * </span>Phone Number:</strong></label></div>
+                                                <div class="col-md-12"><input id="phone" type="text" name="phone_number" placeholder="Enter your phone number" class="form-control" value="" required/></div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="email"><strong>Email Address:</strong></label></div>
+                                                <div class="col-md-12"><input type="text" placeholder="Enter your e-mail address" name="email_address" class="form-control" value="" /></div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="phone_number"><strong><span class="text-danger"> * </span>Phone Number:</strong></label></div>
-                                            <div class="col-md-12"><input type="text" name="phone_number" placeholder="Enter your phone number" class="form-control" value="" required/></div>
-                                        </div>
-                                        </div>
-                                        <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="email"><strong>Email Address:</strong></label></div>
-                                            <div class="col-md-12"><input type="text" placeholder="Enter your e-mail address" name="email_address" class="form-control" value="" /></div>
-                                        </div>
-                                        </div>
-                                        <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><label for="comments"><strong>Comments:</strong></label></div>
-                                            <div class="col-md-12"><input type="text" name="comments" placeholder="Something you need to mention?" name="comment" class="form-control" value=""/></div>
-                                        </div>
+                                            <div class="row">
+                                                <div class="col-md-12"><label for="comments"><strong>Comments:</strong></label></div>
+                                                <div class="col-md-12"><input type="text" name="comments" placeholder="Something you need to mention?" name="comment" class="form-control" value=""/></div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-12"><br><small><strong>inputs with (<span class="text-danger"> * </span>) are required!</strong></small></div>
                                             </div>           
-                                        </div>                              
-                                    </div>                           
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary nextBtn pull-right testbtn" type="button" >Next</button>                                    
                                 </div>
-                                <!--SHIPPING METHOD END-->
-                            <?php endif ?>
+                                <a href="/yourorder" class="btn btn-danger nextBtn pull-left" type="button">Back</a>
+                            </div>
+                        </div>
+                    </div>
 
-                            <?php if( strcmp($paymentMethod, 'Credit Card') == 0 ): ?>
-                            <!--CREDIT CART PAYMENT-->
-                            <div class="col-md-6">
-                                <div class="panel-heading panel-heading-color"><span><i class="glyphicon glyphicon-lock"></i></span> Secure Payment</div>
+                    <div class="row setup-content" id="step-2">
+                        <div class="col-xs-6 col-md-offset-3">
+                            <div class="col-md-12">
+                                <div class="panel-heading panel-heading-color">
+                                    <h3>Payment</h3>
+                                </div>
+
                                 <div class="panel-body panel-body-style">
-                                    <div class="form-group">
+                                    <br><label style="text-decoration:underline;">Payment Method</label>
+                                    <div class="form-check radio-pink-gap">
+                                        <input name="payment_method" type="radio" class="with-gap" value="Credit Card" onclick="toggle('credit')" checked> Credit Card 
+
+                                    </div>
+                                    <div class="form-check radio-pink-gap">
+                                        <input name="payment_method" type="radio" class="with-gap" value="Cash" onclick="toggle('cash')"> Cash
+                                    </div>
+
                                     <div class="row">
-                                        <div class="col-md-12"><label for="card_type"><strong><span class="text-danger">* </span>Card Type:</strong></label></div>
-                                        <div class="col-md-12">
-                                            <select id="CreditCardType" name="CreditCardType" class="form-control">
-                                                <option value="5">Visa</option>
-                                                <option value="6">MasterCard</option>
-                                                <option value="7">American Express</option>
-                                                <option value="8">Discover</option>
-                                            </select>
+                                        <div class="panel-body">
+
+                                            <div id="payment-info" class="pull-left">
+
+                                                <span class="trw-button"
+                                                    data-key ="pk_vF54YsH5CeCztu7s7SQwtgTGwd8u3Ele"
+                                                    data-amount= "<?= $sum * 100 ?>"
+                                                    data-name ="Food4U"
+                                                    data-description ="The Beef company"
+                                                    data-image="https://i0.wp.com/www.grillingoutdoorrecipes.com/wp-content/uploads/2016/05/gorgeous-bridalbouquet-ideasfor-your.jpg?resize=150%2C150"
+                                                    data-locale = "en"
+                                                    data-callback="yourCallbackFunction"
+                                                    data-card = "true">
+                                                </span>
+
+                                                <script>
+                                                    function yourCallbackFunction(token) {
+                                                        document.getElementById('card-token').value = token;
+
+                                                    }
+
+                                                    function yourErrorCallbackFunction(error_code, error_message) {
+                                                        console.log(error_message);
+                                                    }
+                                                </script>
+
+                                            </div>
+                                            <input type="submit" class="btn btn-success pull-right" value="Finish">
+
                                         </div>
                                     </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12"><label for="credit_card_number"><strong><span class="text-danger">* </span>Credit Card Number:</strong></label></div>
-                                        <div class="col-md-12"><input placeholder="XXXX XXXX XXXX XXXX" type="text" class="form-control" name="car_number" value="" required/></div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12"><strong><span class="text-danger">* </span>Card CVV:</strong></div>
-                                        <div class="col-md-12"><input placeholder="xxx" type="text" class="form-control" name="car_code" value="" required/></div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <strong><span class="text-danger">* </span>Expiration Date</strong>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="" required>
-                                                <option value="">Month</option>
-                                                <option value="01">01</option>
-                                                <option value="02">02</option>
-                                                <option value="03">03</option>
-                                                <option value="04">04</option>
-                                                <option value="05">05</option>
-                                                <option value="06">06</option>
-                                                <option value="07">07</option>
-                                                <option value="08">08</option>
-                                                <option value="09">09</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                        </select>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="" required>
-                                                <option value="">Year</option>
-                                                <option value="2015">2015</option>
-                                                <option value="2016">2016</option>
-                                                <option value="2017">2017</option>
-                                                <option value="2018">2018</option>
-                                                <option value="2019">2019</option>
-                                                <option value="2020">2020</option>
-                                                <option value="2021">2021</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2023">2023</option>
-                                                <option value="2024">2024</option>
-                                                <option value="2025">2025</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <span>Pay secure using your credit card.</span>
-                                        </div>
-                                        <div class="col-md-12">
-                                        <img src="http://i76.imgup.net/accepted_c22e0.png">
-                                            <!-- <ul class="cards">
-                                                <li class="visa hand">Visa</li>
-                                                <li class="mastercard hand">MasterCard</li>
-                                                <li class="amex hand">Amex</li>
-                                            </ul> -->
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12"><br><small><strong>inputs with (<span class="text-danger"> * </span>) are required!</strong></small></div>
-                                        </div>           
-                                    </div> 
                                 </div>
-                                <!--CREDIT CART PAYMENT END-->
-                            </div>
-                            <?php endif ?>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a href="/" class="btn btn-danger pull-left">Cancel</a>
-                                <button type="submit" class="btn btn-success pull-right">Checkout</button>
+                                <a href="/products" class="btn btn-danger pull-left">Back</a>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="col-md-2 col-md-offset-1">
-                            
-                    <?php if ($loggedin): ?>
-                        <div class="row">
-                            <div class="panel-heading panel-heading-color">
-                            <h4><span class="fa fa-shopping-basket"></span>  Basket</h4>
-                            </div>
-
-                            <div class="panel-body padding-zero">
-                                <ul class="list-group">
-                                    <?php if (!empty($products)): ?>
-                                        <?php foreach($products as $product): ?>   
-                                            <li class="list-group-item">                      
-                                            <?= $product['product'].' '.'(x'.$product['quantity'].')';?><span class="badge"><?=$product['price'].'€';?></span>
-                                            </li>
-                                        <?php endforeach ?>
-                                        <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
-                                    <?php else: ?>
-                                        <li class="list-group-item" style="border-radius:0px;">(Basket empty)</li>
-                                    <?php endif ?>
-                                </ul> 
-                            </div>
-                        </div>
-
-                    <?php endif ?>
-
-                </div>
-            </div>
+                    
+                    <input type="hidden" name="card_token" id="card-token" value="" />
+                </form>
+                
         </div>
 
         <div class="row">
@@ -405,10 +362,11 @@
             </footer>
 
         </div>
-
+        
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="https://button.preprod.torawallet.gr/tora/checkout.js"></script>
+        <script src="/js/scripts.js"></script>
 
     </body>
-
 </html>

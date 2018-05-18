@@ -103,35 +103,7 @@
 
                                         <?php endforeach ?>
                                     </ul>
-                                    <br><p><strong>total: <?= $sum.'€'; ?></strong></p>
-
-                                    <div style="border-top:1px solid#888; padding-top:15px">
-                                        
-                                        <div class="col-md-6 padding-left-zero">
-                                            <br><label style="text-decoration:underline;">Payment Method</label>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="payment_method" type="radio" class="with-gap" id="radio109" value="Cash" checked> Cash
-                                            </div>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="payment_method" type="radio" class="with-gap" id="radio109" value="Credit Card"> Credit Card
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 padding-right-zero" style="padding-left: 120px;">
-                                            <br><label style="text-decoration:underline;">Delivery Method</label>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="delivery_method" type="radio" class="with-gap" id="radio109" value="Delivery" checked> Delivery
-                                            </div>
-
-                                            <div class="form-check radio-pink-gap ">
-                                                <input name="delivery_method" type="radio" class="with-gap" id="radio109" value="From Store"> From Store
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
                                 </div>
 
                             </div>
@@ -139,7 +111,7 @@
                             <div class="row" style="padding-top:50px">
 
                                 <div class="col-md-2" style="padding-left:0px">
-                                    <a href="/" class="btn btn-danger">Cancel</a>
+                                    <a href="/products" class="btn btn-default">Continue-Shopping</a>
                                 </div>
                                 <div class="col-md-3 col-md-offset-7">                                
                                     <input type="submit" value="Checkout" name="submit" class="btn btn-success">
@@ -273,5 +245,4 @@
     </body>   
 
 </html>
-
 

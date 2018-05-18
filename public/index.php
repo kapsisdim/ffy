@@ -42,6 +42,10 @@ try {
             $controller = new MVC\Controller\LogoutController();            
             echo $controller->indexAction();
             break;
+        case $path == "/delete_item" && $method == 'POST':
+            $controller = new MVC\Model\OrderRepository();
+            echo $controller->deleteOrderItem();
+            break;
         case $path == '/yourorder':
             $controller = new MVC\Controller\OrderController();
             echo $controller->viewAction();
@@ -60,7 +64,7 @@ try {
             break;
         case $path == '/checkout' && $method == 'POST':
             $controller = new MVC\Controller\CheckoutController();
-            echo $controller->indexAction();
+            echo $controller->viewAction();
             break;
         case $path == '/settings' && $method == 'GET':
             $controller = new MVC\Controller\MemberController();

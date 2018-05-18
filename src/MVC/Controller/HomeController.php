@@ -5,39 +5,43 @@ declare(strict_types = 1);
 namespace MVC\Controller;
 
 use MVC\Model\OrderRepository;
+use MVC\Model\OrderModel;
+use MVC\Model\MemberModel;
+use MVC\Model\MemberRepository;
 
 class HomeController extends AbstractController
 {
-    private $sum;
-
-    private $action;
-
     private $basket;
-
+    private $user;
     private $order;
 
     public function indexAction()
     {
         $username = $this->getSession('username');
 
-        $loggedin = isset($username);
+        if (!empty($username)) {
 
-        $this->order = $this->action->getOrder($this->getSession('username'));
+            $member = (new MemberRepository())->getMember($username);
 
-        if (!empty($this->order)) {
+            $user = new MemberModel($member['username'], $member['password'], $member['email']);
 
-            $this->basket = $this->action->getOrderItems($this->getSession('username'), $this->order['order_id']);
+            $this->order = (new OrderRepository())->getOrder($user->getUsername());
 
-            return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'products' => $this->basket, 'sum' => $this->order['summa'] ]);
+            if (!empty($this->order)) {
+                $this->order = new OrderModel($this->order['username'], $this->order['order_id'], $this->order['status'], $this->order['summa'] );
+                $this->basket = (new OrderRepository())->getOrderItems($this->order->getUsername(), $this->order->getId());
+            }
+
+            return $this->render('/../View/home_tpl.php', ['member' => $user, 'username' => $user->getUsername(), 'products' => $this->basket, 'sum' => $this->order]);
         }
-
-        return $this->render('/../View/home_tpl.php', ['loggedin' => $loggedin, 'username' => $username]);        
+            
+        return $this->render('/../View/home_tpl.php', ['member' => $this->user]);
     }
 
     public function __construct()
     {
-        $this->action = new OrderRepository();
-
-        $this->basket = null;
+        $this->basket = "";
+        $this->user = "";
+        $this->order = "";
     }
 }

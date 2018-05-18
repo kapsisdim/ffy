@@ -3,6 +3,7 @@
 namespace MVC\Model;
 
 use MVC\Model\Database;
+use PDO;
 
 class MemberRepository
 {
@@ -23,6 +24,15 @@ class MemberRepository
     {
         $sth =  $this->connection->prepare('INSERT INTO members(username, email, password) VALUES (?, ?, ?)');
         $sth->execute([$username, $email, $password]);
+    }
+
+    public function getMember($username) 
+    {
+        $sth = $this->connection->prepare('SELECT username, email, password FROM members WHERE username = ?');
+        $sth->execute([$username]);
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 
 }

@@ -44,9 +44,9 @@ class OrderController extends AbstractController
 
         $basket = $this->action->getOrderItems($this->getSession('username'), $order['order_id']);
 
-        return $this->render('/../View/your_orders_tpl.php', ['loggedin' => $loggedin, 'orders' => $orders, 'products' => $this->basket, 'sum' => $this->order['summa'], 'username' => $this->getSession('username')]);
+        return $this->render('/../View/your_orders_tpl.php', ['loggedin' => $loggedin, 'orders' => $orders, 'products' => $basket, 'sum' => $order['summa'], 'username' => $this->getSession('username')]);
     }
-
+    
     public function indexAction()
     {
         $this->isAuthenticated();
@@ -96,7 +96,10 @@ class OrderController extends AbstractController
 
         $this->id = $this->action->getOrder($this->getSession('username'));
 
-        $cancelOrder = $this->action->cancelOrder($this->id[0]['order_id']);
+        $cancelOrder = $this->action->cancelOrder($this->id['order_id']);
+
+        return $home = (new \MVC\Controller\HomeController())->indexAction();
+
     }
 
     public function confirmAction()

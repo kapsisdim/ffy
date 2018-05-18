@@ -266,7 +266,7 @@
                                     <!-- btn form -->
                                     <div class="row">
                                         <div class="col-md-1">                                
-                                            <a href="/" class="btn btn-danger">Cancel</a>
+                                            <a href="/" class="btn btn-danger">Back</a>
                                         </div>
 
                                         <div class="col-md-2 col-md-offset-5">
@@ -285,30 +285,38 @@
 
                     <div class="col-md-2 padding-left-zero padding-right-zero">
                         
-                        <?php if ($loggedin): ?>
-                            <div class="row">
-                                <div class="panel-heading panel-heading-color">
-                                    <h4><span class="fa fa-shopping-basket"></span>  Basket</h4>
-                                </div>
-
-                                <div class="panel-body padding-zero">
-                                    <ul class="list-group">
-                                        <?php if (!empty($products)): ?>
-                                            <?php foreach($products as $product): ?>   
-                                                <li class="list-group-item">                      
-                                                <?= $product['product'].' '.'(x'.$product['quantity'].')';?><span class="badge"><?=$product['price'].'€';?></span>
-                                                </li>
-                                            <?php endforeach ?>
-                                        <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
-                                    
-                                        <?php else: ?>
-                                            <li class="list-group-item" >(Basket empty)</li>
-                                        <?php endif ?>
-                                    </ul> 
-                                </div>
+                        <div class="row">
+                            <div class="panel-heading panel-heading-color">
+                                <h4><span class="fa fa-shopping-basket"></span>  Basket</h4>
                             </div>
 
-                        <?php endif ?>
+                            <div class="panel-body padding-zero">
+                                <ul class="list-group">
+                                    <?php if (!empty($products)): ?>
+                                        <?php foreach($products as $product): ?>   
+                                            <li id="par_<?=$product['product'] ?>" class="list-group-item">                      
+                                            <?= $product['product'].' '.'(x'.$product['quantity'].')';?><button id="<?=$product['product'] ?>" class="btn btn-danger pull-right remove-product" onclick="deleteItem(this)"><span class=" glyphicon glyphicon-remove"></span></button><span class="badge"><?=$product['price'].'€';?></span>
+                                            </li>
+                                        <?php endforeach ?>
+                                    <br><p class="total-border sum"><strong>total: <?= $sum.'€'; ?></strong></p>
+                                    <div class="row">                            
+                                        <form method="post" action="/cancel">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                    </div>                                        
+                                    <?php else: ?>
+                                        <li class="list-group-item" >(Basket empty)</li>
+                                        
+                                        <div class="row">                            
+                                            <form method="post" action="/cancel">
+                                                <input type="submit" class="btn btn-danger" value="Delete">
+                                            </form>
+                                        </div>
+
+                                    <?php endif ?>
+                                </ul> 
+                            </div>
+                        </div>                       
 
                     </div>
 
@@ -435,8 +443,8 @@
         </div>
 
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
 
-    </body>    
+</body>
 </html>

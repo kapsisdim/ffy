@@ -18,7 +18,7 @@
                     <h1><a href="/" id="title" >Food For You</a></h1>
                 </div>
             </div>
-            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -48,11 +48,11 @@
                         </div>
 
                         <div class="col-md-4">
-                            <?php if ($loggedin): ?>
+                            <?php if ($member): ?>
                                 <ul class="nav navbar-nav navbar-right" style="margin-top:5px;">
                                     <li class="dropdown">
                                         <a href="" class="dropdown-toggle padding-top-zero padding-bottom-zero" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="color:#9d9d9d;">
-                                        <span class="glyphicon glyphicon-user"> Welcome <strong><?= $username; ?></strong></span><span class="caret pull-right"></span></h5>
+                                        <span class="glyphicon glyphicon-user"> Welcome <strong><?= $member->getUsername(); ?></strong></span><span class="caret pull-right"></span></h5>
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="/settings"><span class="glyphicon glyphicon-cog"></span>  Account Settings</a></li>
@@ -111,7 +111,7 @@
                                     
                         <div class="col-md-2 col-md-offset-4 padding-left-zero padding-right-zero">
                             
-                            <?php if ($loggedin): ?>
+                            <?php if ($member): ?>
                                 <div class="row">
                                     <div class="panel-heading panel-heading-color">
                                         <h4><span class="fa fa-shopping-basket"></span>  Basket</h4>
@@ -125,7 +125,7 @@
                                                         <?= $product['product'].' '.'(x'.$product['quantity'].')';?><span class="badge"><?=$product['price'].'€';?></span>
                                                     </li>
                                                 <?php endforeach ?>
-                                            <br><p class="total-border"><strong>total: <?= $sum.'€'; ?></strong></p>
+                                            <br><p class="total-border"><strong>total: <?= $sum->getSum().'€'; ?></strong></p>
                                         
                                             <?php else: ?>
                                                 <li class="list-group-item">(Basket empty)</li>
@@ -271,7 +271,7 @@
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <script src="/js/bootstrap.min.js"></script> 
-
+    
     </body>
     
 </html>

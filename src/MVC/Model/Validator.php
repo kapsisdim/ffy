@@ -38,12 +38,13 @@ class Validator
 
     public function registerValidation($username, $email, $password_1, $password_2)
     {        
-        if(empty($this->validation->usernameValidation($username))) {
+        if($this->validation->usernameValidation($username)) {
             $this->usernameValidator = true;
         }
 
-        if(empty($this->validation->emailValidation($email))) {
+        if($this->validation->emailValidation($email)) {
             $this->emailValidator = true;
+
         }
 
         if($this->validation->passwordValidation($password_1, $password_2)) {
@@ -53,7 +54,7 @@ class Validator
         if($this->usernameValidator == true && $this->emailValidator == true && $this->passValidator == true) {
             $this->validator = true;
         }
-
+        
         return $this->validator;
     }
 

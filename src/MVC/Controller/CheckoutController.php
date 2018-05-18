@@ -32,7 +32,7 @@ class CheckoutController extends AbstractController
 
         return $this->render('/../View/checkout_tpl.php', ['loggedin' => $loggedin, 'username' => $username, 'paymentMethod' => $this->paymentMethod, 'deliveryMethod' => $this->deliveryMethod, 'sum' => $this->order['summa'], 'products' => $this->basket]);
     }
-
+//change
     public function indexAction()
     {
         $this->paymentMethod = $this->getPost('payment_method');

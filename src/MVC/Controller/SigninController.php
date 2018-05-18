@@ -15,8 +15,6 @@ class SigninController extends AbstractController
 
     private $order;
 
-    private $action;
-
     public function viewAction()
     {
         return $this->render('/../View/signin_tpl.php');
@@ -30,6 +28,7 @@ class SigninController extends AbstractController
         $authetication = (new Autheticator())->userAutheticator($this->username, $this->password);
 
         if ($authetication) {
+
             $_SESSION['username'] = $this->username;
             
             header ("Location: /");
@@ -42,6 +41,5 @@ class SigninController extends AbstractController
 
     public function __construct()
     {
-        $this->action = new OrderRepository();
     }
 }
